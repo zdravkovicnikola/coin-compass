@@ -107,7 +107,10 @@ p {
 /* color utils */
 
 .accent {
-  color: hsl(var(--accent));
+  /* color: hsl(var(--accent)); */
+color: gold;
+-webkit-text-stroke: 1px rgb(197, 187, 50);
+
 }
 
 .muted {
