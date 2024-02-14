@@ -12,10 +12,12 @@ import Main, { mainLoader } from "./layouts/Main";
 
 // Actions
 import { logoutAction } from "./actions/logout";
+//import {addEventListener } from "./actions/script";
 
 // Routes
-import Dashboard, { dashboardLoader } from "./pages/Dashboard";
+import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import Error from "./pages/Error";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -29,11 +31,18 @@ const router = createBrowserRouter([
         index: true, // podrazumevana ruta kada se otvori mejn
         element: <Dashboard />,
         loader: dashboardLoader,
+        action: dashboardAction,
         errorElement: <Error />
       },
       {
         path: "logout",
         action: logoutAction
+       },
+      {
+        path: "/register",
+        //action:addEventListener,
+        element: <Register />
+
       }
     ]
   },

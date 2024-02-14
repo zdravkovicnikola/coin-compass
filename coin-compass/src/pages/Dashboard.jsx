@@ -13,6 +13,13 @@ export function dashboardLoader() {
   return { userName }
 }
 
+//action
+export async function dashboardAction({request}){
+  const data = await request.formData();
+  console.log(data,request);
+}
+
+
 const Dashboard = () => {
   const { userName } = useLoaderData()
 

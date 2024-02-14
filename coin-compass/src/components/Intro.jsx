@@ -1,5 +1,11 @@
 import React from "react";
 import { Form } from "react-router-dom";
+import {Link} from "react-router-dom";
+
+
+//assets
+import illustration from "../assets/illustration.jpg";
+
 
 const Intro = () => {
   return (
@@ -12,41 +18,11 @@ const Intro = () => {
           Planiranje troškova je tajna finansijske slobode. Uživaj slobodu već
           danas.
         </p>
-        <Form className="formica" method="post">
-        <input
-        type="text"
-        name="userName"
-        required
-        placeholder="Unesite korisničko ime"
-        aria-label="Korisničko ime"
-        autoComplete="given-name"
-      />
-      <input
-        type="email"
-        name="email"
-        required
-        placeholder="Unesite e-mail adresu"
-        aria-label="E-mail adresa"
-        autoComplete="email"
-      />
-      <input
-        type="password"
-        name="password"
-        required
-        placeholder="Unesite lozinku"
-        aria-label="Lozinka"
-        autoComplete="new-password"
-      />
-      <input
-        type="text"
-        name="name"
-        required
-        placeholder="Unesite vaše ime"
-        aria-label="Ime"
-        autoComplete="name"
-      />
-        </Form>
+        <Link to= "/register">
+         <button className="button-49"><span className="accent">Započni ovde</span></button>
+          </Link>
       </div>
+      <img src={illustration} alt="Osoba sa novcem" />
     </div>
   );
 };
