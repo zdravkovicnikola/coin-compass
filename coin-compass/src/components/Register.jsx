@@ -23,15 +23,15 @@ const Register = () => {
           </form>
         </div>
         <div className="form-container sign-in">
-          <form>
+          <Form method = "post">
             <h1>Prijavi se</h1>
             <input
-              type="email"
-              name="email"
+              type="text"
+              name="userName"
               required
               placeholder="Unesite e-mail adresu"
               aria-label="E-mail adresa"
-              autoComplete="email"
+              autoComplete="given-name"
             />
             <input
               type="password"
@@ -42,8 +42,8 @@ const Register = () => {
               autoComplete="new-password"
             />
             <a href="#">Zaboravljena lozinka?</a>
-            <button>Uloguj se</button>
-          </form>
+            <button type="submit">Uloguj se</button>
+          </Form>
         </div>
         <div className="toggle-container">
           <div className="toggle">
@@ -63,7 +63,7 @@ const Register = () => {
                 Registrujte se koristeći vaše lične podatke kako biste imali
                 pristup svim funkcijama sajta.
               </p>
-              <button className="hidden" id="register">
+              <button type="submit" className="hidden" id="register">
                 Registruj se
               </button>
             </div>

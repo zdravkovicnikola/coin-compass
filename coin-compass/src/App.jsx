@@ -17,12 +17,12 @@ import { logoutAction } from "./actions/logout";
 // Routes
 import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import Error from "./pages/Error";
-import Register from "./pages/Register";
+import Register from "./components/Register";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main />, //Ovde se definiše React element koji će se renderovati kada korisnik poseti odgovarajuću rutu
+    element: <Main />,  //Ovde se definiše React element koji će se renderovati kada korisnik poseti odgovarajuću rutu
     loader: mainLoader, //Ovo je opcioni parametar koji se koristi za dinamičko učitavanje komponenti. Ako se koristi, ova funkcija će se pozvati
                         // prilikom učitavanja komponente, što može biti korisno za asinhrono učitavanje komponenti.
     errorElement: <Error />,
@@ -38,12 +38,14 @@ const router = createBrowserRouter([
         path: "logout",
         action: logoutAction
        },
-      {
-        path: "/register",
-        //action:addEventListener,
-        element: <Register />
+      // {
+      //   path: "/register",
+      //   //action:addEventListener,
+      //   element: <Register />,
+      //   // action: dashboardAction, // nzm dal treba
+      //   // errorElement: <Error /> //nzm dal treba
 
-      }
+      // }
     ]
   },
 ]);
