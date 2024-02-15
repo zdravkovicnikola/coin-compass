@@ -8,7 +8,7 @@ import logomark from "../assets/logomark.svg"
 const Nav = ({ userName }) => {
   return (
     <>
-    <div className="empty-div"/>
+    {/* <div className="empty-div"/> */}
     <nav>
       
       <NavLink

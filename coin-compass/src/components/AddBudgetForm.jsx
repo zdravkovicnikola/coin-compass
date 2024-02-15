@@ -1,7 +1,7 @@
 // reacts
 import { useEffect, useRef } from "react";
 
-
+// rrd imports
 import { Form, useFetcher } from "react-router-dom";
 
 const AddBudgetForm = () => {
@@ -32,7 +32,6 @@ const AddBudgetForm = () => {
             placeholder="npr. Izlazak"
             required
             className="pomoc"
-            ref = {focusRef}
           /> */}
           <div htmlFor="newBudgetAmount" className="divBudzet">Unesite iznos kojim raspolažete</div>
           <input
