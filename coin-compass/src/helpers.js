@@ -11,12 +11,12 @@ export const fetchData = (key) => {
   return JSON.parse(localStorage.getItem(key));
 };
 
-// delete item
+// izbrisi stavku
 export const deleteItem = ({ key }) => {
   return localStorage.removeItem(key)
 }
 
-// create budget
+// napravi budzet
 export const createBudget = ({
   name, amount
 }) => {
@@ -32,7 +32,7 @@ export const createBudget = ({
     JSON.stringify([...existingBudgets, newItem]))
 }
 
-// create expense
+// napravi torsak
 export const createExpense = ({
   name, amount, budgetId
 }) => {
@@ -46,4 +46,36 @@ export const createExpense = ({
   const existingExpenses = fetchData("expenses") ?? [];
   return localStorage.setItem("expenses",
     JSON.stringify([...existingExpenses, newItem]))
+}
+
+// total potroseno 
+export const calculateSpentByBudget = (budgetId) => {
+  const expenses = fetchData("expenses") ?? [];
+  const budgetSpent = expenses.reduce((acc, expense) => {
+    // check if expense.id === budgetId I passed in
+    if (expense.budgetId !== budgetId) return acc
+
+    // add the current amount to my total
+    return acc += expense.amount
+  }, 0)
+  return budgetSpent;
+}
+
+
+// FORMATTING
+
+// Formatiranje procenata
+export const formatPercentage = (amt) => {
+  return amt.toLocaleString(undefined, {
+    style: "percent",
+    minimumFractionDigits: 0,
+  })
+}
+
+// Format currency
+export const formatCurrency = (amt) => {
+  return amt.toLocaleString(undefined, {
+    style: "currency",
+    currency: "USD"
+  })
 }
