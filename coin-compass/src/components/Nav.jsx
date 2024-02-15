@@ -7,7 +7,10 @@ import logomark from "../assets/logomark.svg"
 
 const Nav = ({ userName }) => {
   return (
+    <>
+    <div className="empty-div"/>
     <nav>
+      
       <NavLink
         to="/"
         aria-label="Go to home"
@@ -34,6 +37,7 @@ const Nav = ({ userName }) => {
         )
       }
     </nav>
+    </>
   )
 }
 export default Nav

@@ -452,10 +452,14 @@ label {
   font-weight: bold;
 }
 
-.pomoc{
-  margin-top: 5%;
+.pomoc {
+  margin-top: 0%;
 }
 
+.empty-div {
+  width: 100px;
+  height: 50px;
+}
 .naslov {
   display: flex;
   flex-direction: column;
@@ -569,7 +573,7 @@ select {
   content: "";
   position: absolute;
   inset: 0.55rem;
-  border: 2px dashed hsl(var(--text));
+  /* border: 2px dashed hsl(var(--text)); */
   border-radius: calc(var(--round-lg) * 0.6);
   z-index: -1;
 }

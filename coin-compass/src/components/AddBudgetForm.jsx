@@ -26,6 +26,7 @@ const AddBudgetForm = () => {
             inputMode="decimal"
             className="pomoc"
           />
+          <input type="hidden" name="_action" value="createBudget" />
         <button type="submit" className="btn btn--dark">
           <span>Napravi budžet</span>
         </button>

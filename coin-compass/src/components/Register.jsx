@@ -42,6 +42,7 @@ const Register = () => {
               autoComplete="new-password"
             />
             <a href="#">Zaboravljena lozinka?</a>
+            <input type="hidden" name= '_action' value = 'newUser'/>
             <button type="submit">Uloguj se</button>
           </Form>
         </div>
