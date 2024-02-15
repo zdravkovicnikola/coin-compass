@@ -13,7 +13,6 @@ const Error = () => {
           className="btn btn--dark"
           onClick={() => navigate(-1)}
         >
-          
           <span>Nazad</span>
         </button>
         <Link
