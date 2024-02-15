@@ -37,9 +37,9 @@ export async function dashboardAction({ request }) {
         name: values.newBudget,
         amount: values.newBudgetAmount,
       })
-      return toast.success("Budžet napravljen!")
+      return toast.success("Novčanik napravljen!")
     } catch (e) {
-      throw new Error("Problem sa kreiranjem budžeta.")
+      throw new Error("Problem sa kreiranjem novčanika.")
     }
   }
 }

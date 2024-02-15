@@ -1,12 +1,30 @@
-import { Form } from "react-router-dom";
+// reacts
+import { useEffect, useRef } from "react";
+
+
+import { Form, useFetcher } from "react-router-dom";
 
 const AddBudgetForm = () => {
+  const fetcher = useFetcher();
+  const isSubmitting = fetcher.state === "submitting"
+
+  const formRef = useRef();
+  const focusRef = useRef();
+
+  useEffect(() => {  //resetovanje
+    if (!isSubmitting) {
+      formRef.current.reset()
+      focusRef.current.focus() // fokus na odredjeni input
+    }
+  }, [isSubmitting])
   return (
     <div className="form-wrapper">
       <h2>"Pecunia non olet."</h2>
       <p>- Novac ne miriše.</p>
-      <Form method="post" className="grid-sm">
-          <div htmlFor="newBudget" className="divBudzet">Ovo je budžet za</div>
+      <fetcher.Form method="post" 
+                    className="grid-sm"
+                    ref={formRef}>
+          {/* <div htmlFor="newBudget" className="divBudzet">Ovo je budžet za</div>
           <input
             type="text"
             name="newBudget"
@@ -14,8 +32,9 @@ const AddBudgetForm = () => {
             placeholder="npr. Izlazak"
             required
             className="pomoc"
-          />
-          <div htmlFor="newBudgetAmount" className="divBudzet">Iznos</div>
+            ref = {focusRef}
+          /> */}
+          <div htmlFor="newBudgetAmount" className="divBudzet">Unesite iznos kojim raspolažete</div>
           <input
             type="number"
             step="0.01"
@@ -25,12 +44,20 @@ const AddBudgetForm = () => {
             required
             inputMode="decimal"
             className="pomoc"
+            ref = {focusRef}
           />
           <input type="hidden" name="_action" value="createBudget" />
-        <button type="submit" className="btn btn--dark">
-          <span>Napravi budžet</span>
+        <button type="submit" className="btn btn--dark" disabled={isSubmitting}>
+          {
+            isSubmitting ? <span>
+            Slanje...</span> : (
+              <>
+                <span>Napravi novčanik</span>
+              </>
+            )
+          }
         </button>
-      </Form>
+      </fetcher.Form>
     </div>
   );
 };
