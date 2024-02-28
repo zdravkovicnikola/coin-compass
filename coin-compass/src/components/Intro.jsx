@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 //assets
 import illustration from "../assets/illustration.jpg";
-import Register from "./Register";
+import Register from "../pages/Register";
 
 
 const Intro = () => {
@@ -33,9 +33,9 @@ const Intro = () => {
             <span>Create Account</span>
           </button>
         </Form> */}
-         <button className="button-49"><span className="accent">Započni ovde</span></button>
+          <Link to="/register"><button className="button-49"><span className="accent">Započni ovde</span></button></Link>
+         
       </div>
-      <Register />
     </div>
   );
 };

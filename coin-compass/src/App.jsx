@@ -17,7 +17,7 @@ import { logoutAction } from "./actions/logout";
 // Routes
 import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import Error from "./pages/Error";
-import Register from "./components/Register";
+import Register from "./pages/Register";
 import ExpensesPage, {expensesAction, expensesLoader } from "./pages/ExpensesPage";
 
 const router = createBrowserRouter([
@@ -45,14 +45,14 @@ const router = createBrowserRouter([
         path: "logout",
         action: logoutAction
        },
-      // {
-      //   path: "/register",
-      //   //action:addEventListener,
-      //   element: <Register />,
-      //   // action: dashboardAction, // nzm dal treba
-      //   // errorElement: <Error /> //nzm dal treba
+      {
+        path: "/register",
+        //action:addEventListener,
+        element: <Register />,
+        // action: dashboardAction, // nzm dal treba
+        // errorElement: <Error /> //nzm dal treba
 
-      // }
+      }
     ]
   },
 ]);
