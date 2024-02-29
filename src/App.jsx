@@ -1,6 +1,6 @@
 import {
   createBrowserRouter,
-  RouterProvider,
+  RouterProvider
 } from "react-router-dom";
 
 //libraries

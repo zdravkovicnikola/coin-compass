@@ -2,6 +2,9 @@ import React , { useState } from "react";
 
 import { Form, useNavigate  } from "react-router-dom";
 import "../pages/Register.css";
+import Slika from '../assets/formaslika.png';
+
+
 const Register = () => {
   <>
     <link
@@ -21,21 +24,9 @@ const [isActive, setIsActive] = useState(false);
     const container = document.getElementById('container');
     container.classList.remove("active");
   };
-
-
-
-  // const history = useNavigate ();
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const formData = new FormData(event.target);
-  //   const userName = formData.get('userName');
-  //   const password = formData.get('password');
-  //   history.push(`/?userName=${userName}&password=${password}`);
-  // };
   return (
     <>
-      <title>Forma</title>
+      <title>Forma  </title>
       <div className="container" id="container">
         <div className="form-container sign-up">
         <Form method = "post" >
@@ -67,7 +58,7 @@ const [isActive, setIsActive] = useState(false);
               autoComplete="new-password"
             />
             <input type="hidden" name= '_action' value = 'newUser'/>
-            <button type="submit">Uloguj se</button>
+            <button type="submit">Registruj se</button>
             </Form>
         </div>
         <div className="form-container sign-in">
