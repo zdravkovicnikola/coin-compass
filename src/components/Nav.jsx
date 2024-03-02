@@ -1,16 +1,13 @@
 // rrd imports
 import { Form, NavLink } from "react-router-dom"
 
-
 // assets
 import logomark from "../assets/logomark.svg"
 
-const Nav = ({ userName }) => {
+const Nav = ({ email }) => {
   return (
     <>
-    {/* <div className="empty-div"/> */}
     <nav>
-      
       <NavLink
         to="/"
         aria-label="Go to home"
@@ -19,7 +16,7 @@ const Nav = ({ userName }) => {
         <span> <span style={{ color: 'gold'}}>Coin</span>Compass</span>
       </NavLink>
       {
-        userName && (
+        email && (
           <Form
             method="post"
             action="logout"
@@ -32,7 +29,6 @@ const Nav = ({ userName }) => {
             <button type="submit" className="btn btn--warning">
               <span>Izbrisi korisnika</span>
             </button>
-
           </Form>
         )
       }

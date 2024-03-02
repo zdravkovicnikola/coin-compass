@@ -9,13 +9,19 @@ export async function logoutAction() {
   // delete the user
   deleteItem({
     key: "userName"
-  })
+  });
+  deleteItem({
+    key: "email"
+  });
+  deleteItem({
+    key: "password"
+  });
   deleteItem({
     key: "budgets"
-  })
+  });
   deleteItem({
     key: "expenses"
-  })
+  });
   toast.success("Uspesno izbrisan nalog!");
   // return redirect
   return redirect("/")

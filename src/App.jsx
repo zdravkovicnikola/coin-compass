@@ -31,7 +31,8 @@ const router = createBrowserRouter([
       {
         index: true, // podrazumevana ruta kada se otvori mejn
         element: <Dashboard />,
-        loader: dashboardLoader,
+        // loader: dashboardLoader,
+        loader:dashboardLoader,
         action: dashboardAction,
         errorElement: <Error />
       },
@@ -47,11 +48,8 @@ const router = createBrowserRouter([
        },
       {
         path: "/register",
-        //action:addEventListener,
         element: <Register />,
-        // action: dashboardAction, // nzm dal treba
-        // errorElement: <Error /> //nzm dal treba
-
+        errorElement: <Error />
       }
     ]
   },

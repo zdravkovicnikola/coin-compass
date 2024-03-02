@@ -12,17 +12,17 @@ import { fetchData } from "../helpers"
 
 // loader
 export function mainLoader() {
-  const userName = fetchData("userName");
-  return { userName }
+  const email = fetchData("email");
+  return { email }
 }
 
 
 const Main = () => {
-  const { userName } = useLoaderData()
+  const { email } = useLoaderData()
 
   return (
     <div className="layout">
-      <Nav userName={userName} />
+      <Nav email={email} />
       <main>
         <Outlet />
       </main>
