@@ -58,6 +58,23 @@ const AddIncomeForm = ({ budgets }) => {
             />
           </div>
         </div>
+        <div className="grid-xs" hidden={budgets.length === 1}>
+          <label htmlFor="newExpenseBudget"className="divBudzet">Budget Category</label>
+          <select name="newExpenseBudget" id="newExpenseBudget" required 
+              className="pomoc">
+            {
+              budgets
+                .sort((a, b) => a.createdAt - b.createdAt)
+                .map((budget) => {
+                  return (
+                    <option key={budget.id} value={budget.id}>
+                      {budget.name}
+                    </option>
+                  )
+                })
+            }
+          </select>
+        </div>
         <input type="hidden" name="_action" value="createIncome" />
         <button type="submit" className="btn btn--dark" disabled={isSubmitting}>
           {

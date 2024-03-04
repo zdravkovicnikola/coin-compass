@@ -88,6 +88,18 @@ export const calculateSpentByBudget = (budgetId) => {
   }, 0)
   return budgetSpent;
 }
+// total pridodato 
+export const calculateIncomeByBudget = (budgetId) => {
+  const incomes = fetchData("incomes") ?? [];
+  const budgetIncome = incomes.reduce((acc, income) => {
+    // Proveravamo da li income.budgetId === budgetId koji je prosleđen
+    if (income.budgetId !== budgetId) return acc;
+
+    // Dodajemo trenutni iznos prihoda na ukupan prihod
+    return acc += income.amount;
+  }, 0);
+  return budgetIncome;
+};
 
 
 // FORMATTING

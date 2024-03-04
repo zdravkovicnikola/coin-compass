@@ -1,9 +1,10 @@
 // helper functions
-import { calculateSpentByBudget, formatCurrency, formatPercentage } from "../helpers";
+import { calculateIncomeByBudget, calculateSpentByBudget, formatCurrency, formatPercentage } from "../helpers";
 
 const BudgetItem = ({ budget }) => {
   const { id, name, amount, color } = budget;
   const spent = calculateSpentByBudget(id);
+  const incomed = calculateIncomeByBudget(id);
 
   return (
     <div
@@ -13,15 +14,17 @@ const BudgetItem = ({ budget }) => {
       }}
     >
       <div className="progress-text">
-        <h3>{name}</h3>
-        <p>{formatCurrency(amount)} Budgeted</p>
+        <h3>Novčanik</h3>
+        <p>{formatCurrency(amount - spent + incomed)} Budžet</p>
       </div>
-      <progress max={amount} value={spent}>
-        {formatPercentage(spent / amount)}
+      <progress max={amount + incomed} value={spent}>
+        {formatPercentage((spent) / (amount + incomed))}
       </progress>
       <div className="progress-text">
-        <small>{formatCurrency(spent)} spent</small>
-        <small>{formatCurrency(amount - spent)} remaining</small>
+        <small>{formatCurrency(spent)} potrošeno</small>
+        <small>...</small>
+        <small>{formatCurrency(incomed)} pridodato</small>
+        
       </div>
     </div>
   )

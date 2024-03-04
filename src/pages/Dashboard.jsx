@@ -58,16 +58,16 @@ export async function dashboardAction({ request }) {
       throw new Error("Problem sa kreiranjem novčanika.");
     }
   }
-  if (_action === "createIncome") {
+  if (_action === "createExpense") {
     try {
-      createIncome({
-        name: values.newIncome,
-        amount: values.newIncomeAmount,
-        budgetId: values.newExpenseBudget, // maybe?
+      createExpense({
+        name: values.newExpense,
+        amount: values.newExpenseAmount,
+        budgetId: values.newExpenseBudget, 
       });
-      return toast.success(`Dodali ste ${values.newIncome} na racun!`);
+      return toast.success(`Skinuli ste ${values.newExpenseAmount} $ sa računa na uzimanju ${values.newExpense}!`);
     } catch (e) {
-      throw new Error("Došlo je do problema prilikom kreiranja vašeg prihoda.");
+      throw new Error("Došlo je do problema prilikom kreiranja transakcije.");
     }
   }
   if (_action === "deleteExpense") {
@@ -83,14 +83,14 @@ export async function dashboardAction({ request }) {
   }
   if (_action === "createIncome") {
     try {
-      createExpense({
+      createIncome({
         name: values.newIncome,
         amount: values.newIncomeAmount,
-        budgetId: values.newIncomeBudget,
+        budgetId: values.newExpenseBudget, 
       });
-      return toast.success(`Expense ${values.newIncome} created!`);
+      return toast.success(`Dodali ste ${values.newIncomeAmount} $ na racun iz izvora ${values.newIncome}!`);
     } catch (e) {
-      throw new Error("There was a problem creating your expense.");
+      throw new Error("Došlo je do problema prilikom kreiranja vašeg prihoda.");
     }
   }
 }
@@ -101,13 +101,12 @@ const Dashboard = () => {
     <>
       {email ? (
         <div className="dashboard">
-          <h2>
+          <h3>
             Dobrodošao nazad, <span className="accent">{email}</span>
-          </h2>
+          </h3>
           <div className="grid-sm">
             {budgets && budgets.length > 0 ? (
               <div className="grid-sm">
-                <h2>Novčanik</h2>
                 <div className="budgets">
                   {budgets.length > 0 && (
                     <BudgetItem key={budgets[0].id} budget={budgets[0]} />
