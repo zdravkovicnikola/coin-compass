@@ -1,5 +1,9 @@
 // helper imports
 import { Link, useFetcher } from "react-router-dom"
+
+// library import
+import { TrashIcon } from "@heroicons/react/24/solid";
+
 import { formatCurrency, formatDateToLocaleString, getAllMatchingItems, } from "../helpers"
 
 
@@ -26,6 +30,19 @@ const IncomeItem = ({ income }) => {
         >
           Prihod
         </Link>
+      </td>
+      <td>
+        <fetcher.Form method="post">
+          <input type="hidden" name="_action" value="deleteIncome" />
+          <input type="hidden" name="incomeId" value={income.id} />
+          <button
+            type="submit"
+            className="btn btn--warning"
+            aria-label={`Delete ${income.name} income`}
+          >
+            <TrashIcon width={20} />
+          </button>
+        </fetcher.Form>
       </td>
     </>
   )

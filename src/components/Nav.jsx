@@ -6,7 +6,8 @@ import logomark from "../assets/logomark.svg"
 
 const Nav = ({ email }) => {
   return (
-    <>
+    <div className="gap">
+      
     <nav>
       <NavLink
         to="/"
@@ -29,11 +30,12 @@ const Nav = ({ email }) => {
             <button type="submit" className="btn btn--warning">
               <span>Izbrisi korisnika</span>
             </button>
+            
           </Form>
         )
       }
     </nav>
-    </>
+    </div>
   )
 }
 export default Nav

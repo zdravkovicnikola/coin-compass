@@ -74,7 +74,7 @@ export async function dashboardAction({ request }) {
         budgetId: values.newExpenseBudget,
       });
       return toast.success(
-        `Skinuli ste ${values.newExpenseAmount} $ sa računa na uzimanju ${values.newExpense}!`
+        `Skinuli ste ${values.newExpenseAmount} $ sa računa pri uzimanju ${values.newExpense}!`
       );
     } catch (e) {
       throw new Error("Došlo je do problema prilikom kreiranja transakcije.");
@@ -86,9 +86,20 @@ export async function dashboardAction({ request }) {
         key: "expenses",
         id: values.expenseId,
       });
-      return toast.success("Expense deleted!");
+      return toast.success("Trošak izbrisan");
     } catch (e) {
-      throw new Error("There was a problem deleting your expense.");
+      throw new Error("Pojavio se problem pri brisanju troška.");
+    }
+  }
+  if (_action === "deleteIncome") {
+    try {
+      deleteItem({
+        key: "incomes",
+        id: values.incomeId,
+      });
+      return toast.success("Prihod izbrisan!");
+    } catch (e) {
+      throw new Error("Postoji problem pri brisanju prihoda.");
     }
   }
   if (_action === "createIncome") {
@@ -137,22 +148,23 @@ const Dashboard = () => {
                     <BudgetItem key={budgets[0].id} budget={budgets[0]} />
                   )}
                 </div>
-                <div className="flex-sm">
+                <div className="flex-lg">
                   <AddExpenseForm budgets={budgets} />
                   <AddIncomeForm budgets={budgets} />
                 </div>
                 {transactions && transactions.length > 0 && (
                   <div className="grid-md">
-                    <h2>Skorašnje Transakcije</h2>
+                    <h3>Skorašnje Transakcije</h3>
                     <Table
                       transactions={transactions
-                        .sort((a, b) => b.createdAt - a.createdAt)}
+                        .sort((a, b) => b.createdAt - a.createdAt)
+                        .slice(0,3)}
                     />
-                    {/* {expenses.length > 8 && (
-                      <Link to="expenses" className="btn btn--dark">
+                    {transactions.length > 3 && (
+                      <Link to="transactions" className="btn btn--dark">
                         Vidi sve troskove
                       </Link>
-                    )} */}
+                    )}
                   </div>
                 )}
               </div>
