@@ -42,7 +42,7 @@ export const createBudget = ({ amount }) => {
   localStorage.setItem("budgets", JSON.stringify([newItem]));
 }
 
-// napravi torsak
+// napravi trosak
 export const createExpense = ({
   name, amount, budgetId
 }) => {
@@ -57,6 +57,24 @@ export const createExpense = ({
   return localStorage.setItem("expenses",
     JSON.stringify([...existingExpenses, newItem]))
 }
+
+// napravi prihod
+export const createIncome = ({
+  name, amount, budgetId
+}) => {
+  const newItem = {
+    id: crypto.randomUUID(),
+    name: name,
+    createdAt: Date.now(),
+    amount: +amount,
+    budgetId: budgetId
+  }
+  const existingIncomes = fetchData("incomes") ?? [];
+  return localStorage.setItem("incomes",
+    JSON.stringify([...existingIncomes, newItem]))
+}
+
+
 
 // total potroseno 
 export const calculateSpentByBudget = (budgetId) => {

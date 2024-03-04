@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Intro from "../components/Intro";
 import AddBudgetForm from "../components/AddBudgetForm";
 import AddExpenseForm from "../components/AddExpenseForm";
+import AddIncomeForm from "../components/AddIncomeForm";
 import BudgetItem from "../components/BudgetItem";
 import Table from "../components/Table";
 
@@ -15,6 +16,7 @@ import Table from "../components/Table";
 import {
   createBudget,
   createExpense,
+  createIncome,
   deleteItem,
   fetchData,
   waait,
@@ -27,7 +29,8 @@ export function dashboardLoader() {
   const password = fetchData("password");
   const budgets = fetchData("budgets");
   const expenses = fetchData("expenses");
-  return { budgets, expenses, userName, email, password };
+  const incomes = fetchData("incomes");
+  return { budgets, expenses, userName, email, password, incomes };
 }
 
 //action
@@ -55,16 +58,16 @@ export async function dashboardAction({ request }) {
       throw new Error("Problem sa kreiranjem novčanika.");
     }
   }
-  if (_action === "createExpense") {
+  if (_action === "createIncome") {
     try {
-      createExpense({
-        name: values.newExpense,
-        amount: values.newExpenseAmount,
-        budgetId: values.newExpenseBudget,
+      createIncome({
+        name: values.newIncome,
+        amount: values.newIncomeAmount,
+        budgetId: values.newExpenseBudget, // maybe?
       });
-      return toast.success(`Expense ${values.newExpense} created!`);
+      return toast.success(`Dodali ste ${values.newIncome} na racun!`);
     } catch (e) {
-      throw new Error("There was a problem creating your expense.");
+      throw new Error("Došlo je do problema prilikom kreiranja vašeg prihoda.");
     }
   }
   if (_action === "deleteExpense") {
@@ -76,6 +79,18 @@ export async function dashboardAction({ request }) {
       return toast.success("Expense deleted!");
     } catch (e) {
       throw new Error("There was a problem deleting your expense.");
+    }
+  }
+  if (_action === "createIncome") {
+    try {
+      createExpense({
+        name: values.newIncome,
+        amount: values.newIncomeAmount,
+        budgetId: values.newIncomeBudget,
+      });
+      return toast.success(`Expense ${values.newIncome} created!`);
+    } catch (e) {
+      throw new Error("There was a problem creating your expense.");
     }
   }
 }
@@ -100,6 +115,7 @@ const Dashboard = () => {
                 </div>
                 <div className="flex-sm">
                   <AddExpenseForm budgets={budgets} />
+                  <AddIncomeForm budgets={budgets} />
                 </div>
                 {expenses && expenses.length > 0 && (
                   <div className="grid-md">

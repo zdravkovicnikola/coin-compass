@@ -41,7 +41,7 @@ const AddExpenseForm = ({ budgets }) => {
               type="text"
               name="newExpense"
               id="newExpense"
-              placeholder="e.g., Coffee"
+              placeholder="npr. Kafa"
               ref={focusRef}
               required
               className="pomoc"
@@ -55,7 +55,7 @@ const AddExpenseForm = ({ budgets }) => {
               inputMode="decimal"
               name="newExpenseAmount"
               id="newExpenseAmount"
-              placeholder="e.g., 3.50"
+              placeholder="npr. 3.50$"
               required
               className="pomoc"
             />
