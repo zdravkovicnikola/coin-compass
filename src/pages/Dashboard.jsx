@@ -4,7 +4,6 @@ import { Link, useLoaderData } from "react-router-dom";
 //library imports
 import { toast } from "react-toastify";
 
-
 //components
 import Intro from "../components/Intro";
 import AddBudgetForm from "../components/AddBudgetForm";
@@ -13,7 +12,13 @@ import BudgetItem from "../components/BudgetItem";
 import Table from "../components/Table";
 
 //  helper functions
-import { createBudget, createExpense,deleteItem, fetchData, waait } from "../helpers";
+import {
+  createBudget,
+  createExpense,
+  deleteItem,
+  fetchData,
+  waait,
+} from "../helpers";
 
 // loader
 export function dashboardLoader() {
@@ -43,10 +48,9 @@ export async function dashboardAction({ request }) {
   if (_action === "createBudget") {
     try {
       createBudget({
-        name: values.newBudget,
         amount: values.newBudgetAmount,
       });
-      return toast.success("Novčanik napravljen!");
+      return toast.success("Novčanik je napravljen!");
     } catch (e) {
       throw new Error("Problem sa kreiranjem novčanika.");
     }
@@ -77,8 +81,8 @@ export async function dashboardAction({ request }) {
 }
 
 const Dashboard = () => {
- const {email, budgets, expenses } = useLoaderData();
- return (
+  const { email, budgets, expenses } = useLoaderData();
+  return (
     <>
       {email ? (
         <div className="dashboard">
@@ -88,15 +92,14 @@ const Dashboard = () => {
           <div className="grid-sm">
             {budgets && budgets.length > 0 ? (
               <div className="grid-sm">
-                <div className="flex-sm">
-                  <AddBudgetForm />
-                  <AddExpenseForm budgets={budgets} />
-                </div>
-                <h2>Postojeći budžeti</h2>
+                <h2>Novčanik</h2>
                 <div className="budgets">
-                  {budgets.map((budget) => (
-                    <BudgetItem key={budget.id} budget={budget} />
-                  ))}
+                  {budgets.length > 0 && (
+                    <BudgetItem key={budgets[0].id} budget={budgets[0]} />
+                  )}
+                </div>
+                <div className="flex-sm">
+                  <AddExpenseForm budgets={budgets} />
                 </div>
                 {expenses && expenses.length > 0 && (
                   <div className="grid-md">

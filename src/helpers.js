@@ -28,19 +28,18 @@ export const getAllMatchingItems = ({ category, key, value }) => {
 };
 
 // napravi budzet
-export const createBudget = ({
-  name, amount
-}) => {
+export const createBudget = ({ amount }) => {
+  const existingBudgets = fetchData("budgets") ?? [];
+  if (existingBudgets.length > 0) {
+    throw new Error("Već postoji budžet.");
+  }
   const newItem = {
     id: crypto.randomUUID(),
-    name: name,
     createdAt: Date.now(),
     amount: +amount,
     color: generateRandomColor()
   }
-  const existingBudgets = fetchData("budgets") ?? [];
-  return localStorage.setItem("budgets",
-    JSON.stringify([...existingBudgets, newItem]))
+  localStorage.setItem("budgets", JSON.stringify([newItem]));
 }
 
 // napravi torsak
