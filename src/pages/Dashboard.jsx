@@ -30,7 +30,15 @@ export function dashboardLoader() {
   const budgets = fetchData("budgets");
   const expenses = fetchData("expenses");
   const incomes = fetchData("incomes");
-  return { budgets, expenses, userName, email, password, incomes };
+
+  return {
+    budgets,
+    expenses,
+    userName,
+    email,
+    password,
+    incomes,
+  };
 }
 
 //action
@@ -63,9 +71,11 @@ export async function dashboardAction({ request }) {
       createExpense({
         name: values.newExpense,
         amount: values.newExpenseAmount,
-        budgetId: values.newExpenseBudget, 
+        budgetId: values.newExpenseBudget,
       });
-      return toast.success(`Skinuli ste ${values.newExpenseAmount} $ sa računa na uzimanju ${values.newExpense}!`);
+      return toast.success(
+        `Skinuli ste ${values.newExpenseAmount} $ sa računa na uzimanju ${values.newExpense}!`
+      );
     } catch (e) {
       throw new Error("Došlo je do problema prilikom kreiranja transakcije.");
     }
@@ -86,9 +96,11 @@ export async function dashboardAction({ request }) {
       createIncome({
         name: values.newIncome,
         amount: values.newIncomeAmount,
-        budgetId: values.newExpenseBudget, 
+        budgetId: values.newExpenseBudget,
       });
-      return toast.success(`Dodali ste ${values.newIncomeAmount} $ na racun iz izvora ${values.newIncome}!`);
+      return toast.success(
+        `Dodali ste ${values.newIncomeAmount} $ na racun iz izvora ${values.newIncome}!`
+      );
     } catch (e) {
       throw new Error("Došlo je do problema prilikom kreiranja vašeg prihoda.");
     }
@@ -96,7 +108,20 @@ export async function dashboardAction({ request }) {
 }
 
 const Dashboard = () => {
-  const { email, budgets, expenses } = useLoaderData();
+  const { email, budgets, expenses, incomes } = useLoaderData();
+
+  let transactions = [];
+
+  if (expenses && expenses.length > 0) {
+    transactions = expenses.map((expense) => ({ ...expense, type: "expense" }));
+  }
+
+  if (incomes && incomes.length > 0) {
+    transactions = transactions.concat(
+      incomes.map((income) => ({ ...income, type: "income" }))
+    );
+  }
+  console.log(transactions);
   return (
     <>
       {email ? (
@@ -116,19 +141,18 @@ const Dashboard = () => {
                   <AddExpenseForm budgets={budgets} />
                   <AddIncomeForm budgets={budgets} />
                 </div>
-                {expenses && expenses.length > 0 && (
+                {transactions && transactions.length > 0 && (
                   <div className="grid-md">
-                    <h2>Skorašnji Troškovi</h2>
+                    <h2>Skorašnje Transakcije</h2>
                     <Table
-                      expenses={expenses
-                        .sort((a, b) => b.createdAt - a.createdAt)
-                        .slice(0, 8)}
+                      transactions={transactions
+                        .sort((a, b) => b.createdAt - a.createdAt)}
                     />
-                    {expenses.length > 8 && (
+                    {/* {expenses.length > 8 && (
                       <Link to="expenses" className="btn btn--dark">
                         Vidi sve troskove
                       </Link>
-                    )}
+                    )} */}
                   </div>
                 )}
               </div>

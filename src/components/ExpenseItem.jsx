@@ -32,7 +32,7 @@ const ExpenseItem = ({ expense }) => {
             "--accent": budget.color,
           }}
         >
-          {budget.name}
+          Trosak
         </Link>
       </td>
       <td>

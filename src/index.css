@@ -31,6 +31,7 @@ svg {
 
   /* colors */
   --accent: 183 74% 44%;
+  --accent-green: hsl(150, 90%, 34%);
   --bkg: 190 60% 98%;
   --text: 185 26% 9%;
   --muted: 183 8% 55%;

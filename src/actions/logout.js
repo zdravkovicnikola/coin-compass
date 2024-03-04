@@ -22,6 +22,9 @@ export async function logoutAction() {
   deleteItem({
     key: "expenses"
   });
+  deleteItem({
+    key: "incomes"
+  });
   toast.success("Uspesno izbrisan nalog!");
   // return redirect
   return redirect("/")
