@@ -19,6 +19,7 @@ import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import Error from "./pages/Error";
 import Register from "./pages/Register";
 import ExpensesPage, {expensesAction, expensesLoader } from "./pages/ExpensesPage";
+import TransactionsPage, {transactionsLoader, transactionsAction} from "./pages/TransactionsPage";
 
 const router = createBrowserRouter([
   {
@@ -37,12 +38,6 @@ const router = createBrowserRouter([
         errorElement: <Error />
       },
       {
-        path: "expenses",
-        element: <ExpensesPage />,
-        loader: expensesLoader,
-        action: expensesAction,
-      },
-      {
         path: "logout",
         action: logoutAction
        },
@@ -50,6 +45,12 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
         errorElement: <Error />
+      },
+      {
+        path: "transactions",
+        element: <TransactionsPage />,
+        loader: transactionsLoader,
+        action: transactionsAction,
       }
     ]
   },
