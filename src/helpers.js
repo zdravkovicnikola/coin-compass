@@ -1,4 +1,5 @@
-export const waait = () => new Promise(res => setTimeout(res, Math.random() * 800));
+export const waait = () => 
+new Promise(res => setTimeout(res, Math.random() * 800));
 
 //colors
 const generateRandomColor = () => {
@@ -74,8 +75,6 @@ export const createIncome = ({
     JSON.stringify([...existingIncomes, newItem]))
 }
 
-
-
 // total potroseno 
 export const calculateSpentByBudget = (budgetId) => {
   const expenses = fetchData("expenses") ?? [];
@@ -100,7 +99,6 @@ export const calculateIncomeByBudget = (budgetId) => {
   }, 0);
   return budgetIncome;
 };
-
 
 // FORMATTING
 export const formatDateToLocaleString = (epoch) => new Date(epoch).toLocaleDateString();

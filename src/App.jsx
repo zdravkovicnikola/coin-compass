@@ -12,14 +12,16 @@ import Main, { mainLoader } from "./layouts/Main";
 
 // Actions
 import { logoutAction } from "./actions/logout";
-//import {addEventListener } from "./actions/script";
 
 // Routes
 import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import Error from "./pages/Error";
 import Register from "./pages/Register";
-import ExpensesPage, {expensesAction, expensesLoader } from "./pages/ExpensesPage";
 import TransactionsPage, {transactionsLoader, transactionsAction} from "./pages/TransactionsPage";
+import BudgetExpensePage, {
+  budgetExpenseAction,
+  budgetExpenseLoader, 
+} from "./pages/BudgetExpensePage";
 
 const router = createBrowserRouter([
   {
@@ -32,10 +34,16 @@ const router = createBrowserRouter([
       {
         index: true, // podrazumevana ruta kada se otvori mejn
         element: <Dashboard />,
-        // loader: dashboardLoader,
         loader:dashboardLoader,
         action: dashboardAction,
         errorElement: <Error />
+      },
+      {
+        path: "budgetexpense/:id",
+        element: <BudgetExpensePage />,
+        loader: budgetExpenseLoader,
+        action: budgetExpenseAction,
+        errorElement: <Error />,
       },
       {
         path: "logout",
@@ -51,6 +59,7 @@ const router = createBrowserRouter([
         element: <TransactionsPage />,
         loader: transactionsLoader,
         action: transactionsAction,
+        errorElement: <Error />
       }
     ]
   },

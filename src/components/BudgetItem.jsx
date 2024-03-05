@@ -23,7 +23,7 @@ const BudgetItem = ({ budget }) => {
       <div className="progress-text">
         <small>{formatCurrency(spent)} potrošeno</small>
         <small>...</small>
-        <small>{formatCurrency(incomed)} pridodato</small>
+        <small >{formatCurrency(incomed)} pridodato</small>
         
       </div>
     </div>

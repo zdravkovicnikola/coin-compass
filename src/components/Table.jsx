@@ -2,17 +2,18 @@
 import ExpenseItem from "./ExpenseItem"
 import IncomeItem from "./IncomeItem"
 
-const Table = ({ transactions }) => {
+const Table = ({ transactions , showBudget = true}) => {
   return (
     <div className="table">
       <table>
         <thead>
           <tr>
             {
-              ["Naziv", "Iznos", "Datum", "Tip"].map((i, index) => (
+              ["Naziv", "Iznos", "Datum", showBudget ? "Tip" : "", ""].map(
+                (i, index) => (
                 <th key={index}>{i}</th>
-              ))
-            }
+              )
+            )}
           </tr>
         </thead>
         <tbody>
@@ -20,7 +21,7 @@ const Table = ({ transactions }) => {
             transactions.map((transaction) => (
               <tr key={transaction.id}>
                 {transaction.type === "expense" ? (
-                  <ExpenseItem expense={transaction} />
+                  <ExpenseItem expense={transaction} showBudget={showBudget}/>
                 ) : (
                   <IncomeItem income={transaction} />
                 )}
