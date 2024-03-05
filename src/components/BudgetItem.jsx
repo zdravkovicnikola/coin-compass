@@ -10,7 +10,9 @@ const BudgetItem = ({ budget }) => {
     <div
       className="budget"
       style={{
-        "--accent": color
+        "--accent-green": "color",
+        color: "black",
+        textShadow: `0 0 1px rgba(0,0,0,0.8)`
       }}
     >
       <div className="progress-text">

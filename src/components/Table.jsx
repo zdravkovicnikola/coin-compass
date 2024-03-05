@@ -23,7 +23,7 @@ const Table = ({ transactions , showBudget = true}) => {
                 {transaction.type === "expense" ? (
                   <ExpenseItem expense={transaction} showBudget={showBudget}/>
                 ) : (
-                  <IncomeItem income={transaction} />
+                  <IncomeItem income={transaction} showBudget={showBudget}/>
                 )}
               </tr>
             ))

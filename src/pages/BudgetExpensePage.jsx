@@ -79,6 +79,7 @@ const BudgetExpensePage = () => {
       className="grid-lg"
       style={{
         "--accent": budget.color,
+        textShadow: `0 0 1px rgba(0,0,0,0.8)`
       }}
     >
       <h1 className="h2">

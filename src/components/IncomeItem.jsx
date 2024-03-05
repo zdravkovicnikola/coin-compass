@@ -8,7 +8,7 @@ import { formatCurrency, formatDateToLocaleString, getAllMatchingItems, } from "
 
 
 
-const IncomeItem = ({ income }) => {
+const IncomeItem = ({ income , showBudget}) => {
     const fetcher = useFetcher();
 
     const budget = getAllMatchingItems({
@@ -21,9 +21,10 @@ const IncomeItem = ({ income }) => {
       <td>{income.name}</td>
       <td>{formatCurrency(income.amount)}</td>
       <td>{formatDateToLocaleString(income.createdAt)}</td>
+      {showBudget && (
       <td>
         <Link
-          to={`/budget/${budget.id}`}
+          to={`/budgetincome/${budget.id}`}
           style={{
             "--accent-green": budget.color,
           }}
@@ -31,6 +32,7 @@ const IncomeItem = ({ income }) => {
           Prihod
         </Link>
       </td>
+      )}
       <td>
         <fetcher.Form method="post">
           <input type="hidden" name="_action" value="deleteIncome" />
