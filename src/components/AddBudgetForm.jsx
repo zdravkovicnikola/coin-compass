@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 // rrd imports
 import { Form, useFetcher } from "react-router-dom";
 
+import Slika from "../assets/CoinCompass.png"
+
 const AddBudgetForm = () => {
   const fetcher = useFetcher();
   const isSubmitting = fetcher.state === "submitting"

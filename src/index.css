@@ -402,8 +402,9 @@ main {
   display: -ms-grid;
   display: grid;
   place-items: start;
+  display: flex;
+  justify-content: center;  
 }
-
 /* navbar */
 nav {
   display: -webkit-box;

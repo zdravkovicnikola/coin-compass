@@ -14,7 +14,6 @@ body{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* height: 100vh; */
 }
 
 .container{
@@ -61,6 +60,7 @@ body{
     text-transform: uppercase;
     margin-top: 10px;
     cursor: pointer;
+    margin-bottom: 5px;
 }
 
 .container button.hidden{
@@ -130,22 +130,6 @@ body{
         z-index: 5;
     }
 }
-
-.social-icons{
-    margin: 20px 0;
-}
-
-.social-icons a{
-    border: 1px solid #ccc;
-    border-radius: 20%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 3px;
-    width: 40px;
-    height: 40px;
-}
-
 .toggle-container{
     position: absolute;
     top: 0;
@@ -211,3 +195,60 @@ body{
 .container.active .toggle-right{
     transform: translateX(200%);
 }
+:root {
+    /* fonts */
+    --fs-200: clamp(0.78rem, calc(0.71rem + 0.35vw), 0.96rem);
+    --fs-300: clamp(0.94rem, calc(0.84rem + 0.51vw), 1.2rem);
+    --fs-400: clamp(1.13rem, calc(0.98rem + 0.73vw), 1.5rem);
+    --fs-500: clamp(1.94rem, calc(1.56rem + 1.92vw), 2.93rem);
+    --fs-600: clamp(2.8rem, calc(2.11rem + 3.47vw), 4.58rem);
+    --lh-1: 1;
+    --lh-1-1: 1.1;
+    --lh-1-4: 1.4;
+}
+img{
+    flex: 1 1 48%;
+    max-width: 800px;
+    position: relative;
+    
+}
+
+@media only screen and (max-width: 1160px) {
+    .slika{
+        display: none;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .container {
+      width: 100%;
+      padding: 10px;
+      border-radius: 0;
+    }
+
+}
+
+@media only screen and (max-width: 425px) {
+
+    .naslovh1{
+        font-size:  var(--fs-500);
+    }
+    .naslovh2{
+        font-size: var(--fs-400);
+    }
+    .form-container{
+        width: 50%;
+    }
+    .container form {
+        padding: 0 10px;
+    }
+
+}
+@media only screen and (max-width: 375px) {
+    .container button{
+        padding: 8px 20px;
+        font-size: 11px;
+        margin-top: 0px
+    }
+
+} 
+

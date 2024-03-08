@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
 import "../pages/Register.css";
-import Slika from "../assets/formaslika.png";
+import Slika from "../assets/formaslika.png"
 
 const handleSubmit = (e) => {
   e.preventDefault();
@@ -42,9 +42,10 @@ const Register = () => {
         <div className="form-container sign-up">
           <Form method="post" onSubmit={handleSubmit}>
             <p>...</p>
-            <h1>Registruj se</h1>
+            <h1 className="naslovh1">Registruj se</h1>
             <p>...</p>
             <input
+              className="inputR"
               type="text"
               name="userName"
               required
@@ -53,6 +54,7 @@ const Register = () => {
               autoComplete="given-name"
             />
             <input
+              className="inputR"
               type="email"
               name="email"
               required
@@ -60,6 +62,7 @@ const Register = () => {
               aria-label="E-mail adresa"
             />
             <input
+              className="inputR"
               type="password"
               name="password"
               required
@@ -74,9 +77,10 @@ const Register = () => {
         <div className="form-container sign-in">
           <Form method="post" onSubmit={handleSubmit}>
             <p>...</p>
-            <h1>Prijavi se</h1>
+            <h1 className="naslovh1">Prijavi se</h1>
             <p>...</p>
             <input
+              className="inputR"
               type="email"
               name="email"
               required
@@ -84,6 +88,7 @@ const Register = () => {
               aria-label="E-mail adresa"
             />
             <input
+              className="inputR"
               type="password"
               name="password"
               required
@@ -101,7 +106,7 @@ const Register = () => {
         <div className="toggle-container">
           <div className="toggle">
             <div className="toggle-panel toggle-left">
-              <h2>Dobrodosao nazad!</h2>
+              <h2 className="naslovh2">Dobrodosao nazad!</h2>
               <p>
                 Evidentirajte svoje lične podatke kako biste mogli da koristite
                 sve funkcije sajta.
@@ -115,7 +120,7 @@ const Register = () => {
               </button>
             </div>
             <div className="toggle-panel toggle-right">
-              <h2>Poštovanje, prijatelju!</h2>
+              <h2 className="naslovh2">Poštovanje, prijatelju!</h2>
               <p>
                 Registrujte se koristeći vaše lične podatke kako biste imali
                 pristup svim funkcijama sajta.
@@ -131,6 +136,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+          <img className = "slika" src={Slika} alt="slika" />
     </>
   );
 };
