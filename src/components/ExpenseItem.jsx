@@ -25,6 +25,7 @@ const ExpenseItem = ({ expense , showBudget }) => {
       <td>{expense.name}</td>
       <td>{formatCurrency(expense.amount)}</td>
       <td>{formatDateToLocaleString(expense.createdAt)}</td>
+      <td>{expense.categoryId}</td>
       {showBudget && (
       <td>
         <Link

@@ -21,6 +21,7 @@ const IncomeItem = ({ income , showBudget}) => {
       <td>{income.name}</td>
       <td>{formatCurrency(income.amount)}</td>
       <td>{formatDateToLocaleString(income.createdAt)}</td>
+      <td>{income.categoryId}</td>
       {showBudget && (
       <td>
         <Link

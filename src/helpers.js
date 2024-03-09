@@ -45,14 +45,15 @@ export const createBudget = ({ amount }) => {
 
 // napravi trosak
 export const createExpense = ({
-  name, amount, budgetId
+  name, amount, categoryId ,budgetId 
 }) => {
   const newItem = {
     id: crypto.randomUUID(),
     name: name,
     createdAt: Date.now(),
     amount: +amount,
-    budgetId: budgetId
+    categoryId: categoryId,
+    budgetId: budgetId,
   }
   const existingExpenses = fetchData("expenses") ?? [];
   return localStorage.setItem("expenses",
@@ -61,13 +62,14 @@ export const createExpense = ({
 
 // napravi prihod
 export const createIncome = ({
-  name, amount, budgetId
+  name, amount , categoryId, budgetId
 }) => {
   const newItem = {
     id: crypto.randomUUID(),
     name: name,
     createdAt: Date.now(),
     amount: +amount,
+    categoryId: categoryId,
     budgetId: budgetId
   }
   const existingIncomes = fetchData("incomes") ?? [];
