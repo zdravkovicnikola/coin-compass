@@ -1,18 +1,16 @@
-// rrd imports
+import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 
-//library imports
 import { toast } from "react-toastify";
 
-// components
+import expenseCategories from "../components/expenseCategories.json"
+
 import AddExpenseForm from "../components/AddExpenseForm";
 import BudgetItem from "../components/BudgetItem";
 import Table from "../components/Table";
 
-// helpers
-import { createExpense,  deleteItem,  getAllMatchingItems } from "../helpers";
+import { createExpense, deleteItem, getAllMatchingItems } from "../helpers";
 
-// loader
 export async function budgetExpenseLoader({ params }) {
   const budget = await getAllMatchingItems({
     category: "budgets",
@@ -33,9 +31,7 @@ export async function budgetExpenseLoader({ params }) {
   return { budget, expenses };
 }
 
-// action
 export async function budgetExpenseAction({ request }) {
-
   const data = await request.formData();
   const { _action, ...values } = Object.fromEntries(data);
 
@@ -44,6 +40,7 @@ export async function budgetExpenseAction({ request }) {
       createExpense({
         name: values.newExpense,
         amount: values.newExpenseAmount,
+        categoryId: values.newExpenseCategory,
         budgetId: values.newExpenseBudget,
       });
       return toast.success(
@@ -64,22 +61,42 @@ export async function budgetExpenseAction({ request }) {
       throw new Error("Pojavio se problem pri brisanju troška.");
     }
   }
-
 }
 
 const BudgetExpensePage = () => {
   const { budget, expenses } = useLoaderData();
-  let transactions = [];
+  const [filteredCategory, setFilteredCategory] = useState("");
 
+  const handleFilterChange = (e) => {
+    const selectedCategory = e.target.value;
+    setFilteredCategory(selectedCategory);
+  };
+
+  let transactions = [];
   if (expenses && expenses.length > 0) {
     transactions = expenses.map((expense) => ({ ...expense, type: "expense" }));
   }
+
+  let filteredExpenses = [];
+  if (filteredCategory) {
+    filteredExpenses = transactions.filter(
+      (expense) => expense.categoryId === filteredCategory
+    );
+  } else {
+    filteredExpenses = transactions;
+  }
+
+  let noExpensesMessage = null;
+  if (filteredCategory && filteredExpenses.length === 0) {
+    noExpensesMessage = <p>Nema troškova za izabranu kategoriju.</p>;
+  }
+
   return (
     <div
       className="grid-lg"
       style={{
         "--accent": budget.color,
-        textShadow: `0 0 1px rgba(0,0,0,0.8)`
+        textShadow: `0 0 1px rgba(0,0,0,0.8)`,
       }}
     >
       <h1 className="h2">
@@ -92,12 +109,30 @@ const BudgetExpensePage = () => {
       {expenses && expenses.length > 0 && (
         <div className="grid-md">
           <h2>
-            <span className="accent">Troškovi</span> 
+            <span className="accent">Troškovi</span>
           </h2>
-          <Table transactions={transactions} showBudget={false} />
+          <div className="grid-xs">
+            <label htmlFor="filterCategory">Filtriraj po kategoriji:</label>
+            <select
+              name="filterCategory"
+              id="filterCategory"
+              value={filteredCategory}
+              onChange={handleFilterChange}
+            >
+              <option value="">Sve kategorije</option>
+              {expenseCategories.map((category) => (
+                <option key={category.id} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <Table transactions={filteredExpenses} showBudget={false} />
+          {noExpensesMessage}
         </div>
       )}
     </div>
   );
 };
+
 export default BudgetExpensePage;

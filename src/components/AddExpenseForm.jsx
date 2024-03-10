@@ -135,7 +135,7 @@ const AddExpenseForm = ({ budgets }) => {
         </div>
         <div className="grid-xs">
           <label htmlFor="newExpenseCategory" className="divBudzet">
-            Izaberi kategoriju troška
+            Izaberite kategoriju troška
           </label>
           <select
             name="newExpenseCategory"

@@ -129,7 +129,7 @@ const AddIncomeForm = ({ budgets }) => {
         </div>
         <div className="grid-xs">
           <label htmlFor="newIncomeCategory" className="divBudzet">
-            Izaberi kategoriju troška
+            Izaberi kategoriju prihoda
           </label>
           <select
             name="newIncomeCategory"
@@ -140,7 +140,7 @@ const AddIncomeForm = ({ budgets }) => {
             className="pomoc"
           >
             <option value="" disabled hidden>
-              Izaberi kategoriju troska
+              Izaberite kategoriju prihoda
             </option>
             {incomeCategories.map((category) => (
               <option key={category.id} value={category.name}>

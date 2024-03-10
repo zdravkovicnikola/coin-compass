@@ -6,8 +6,6 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 
 import { formatCurrency, formatDateToLocaleString, getAllMatchingItems, } from "../helpers"
 
-
-
 const IncomeItem = ({ income , showBudget}) => {
     const fetcher = useFetcher();
 
