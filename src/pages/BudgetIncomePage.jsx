@@ -1,8 +1,12 @@
+import React, { useState } from "react";
+
 // rrd imports
 import { useLoaderData } from "react-router-dom";
 
 //library imports
 import { toast } from "react-toastify";
+
+import incomeCategories from "../components/incomeCategory.json"
 
 // components
 import AddIncomeForm from "../components/AddIncomeForm";
@@ -35,7 +39,6 @@ export async function budgetIncomeLoader({ params }) {
 
 // action
 export async function budgetIncomeAction({ request }) {
-
   const data = await request.formData();
   const { _action, ...values } = Object.fromEntries(data);
 
@@ -55,6 +58,7 @@ export async function budgetIncomeAction({ request }) {
       createIncome({
         name: values.newIncome,
         amount: values.newIncomeAmount,
+        categoryId: values.newExpenseCategory,
         budgetId: values.newExpenseBudget,
       });
       return toast.success(
@@ -69,6 +73,31 @@ export async function budgetIncomeAction({ request }) {
 
 const BudgetIncomePage = () => {
   const { budget, incomes } = useLoaderData();
+  const [filteredCategory, setFilteredCategory] = useState("");
+
+  const handleFilterChange = (e) => {
+    const selectedCategory = e.target.value;
+    setFilteredCategory(selectedCategory);
+  };
+
+  let transactions = [];
+  if (incomes && incomes.length > 0) {
+    transactions = incomes.map((income) => ({ ...income, type: "income" }));
+  }
+
+  let filteredIncomes = [];
+  if (filteredCategory) {
+    filteredIncomes = transactions.filter(
+      (income) => income.categoryId === filteredCategory
+    );
+  } else {
+    filteredIncomes = transactions;
+  }
+
+  let noIncomesMessage = null;
+  if (filteredCategory && filteredIncomes.length === 0) {
+    noIncomesMessage = <p>Nema prihoda za izabranu kategoriju.</p>;
+  }
   return (
     <div
       className="grid-lg"
@@ -89,7 +118,24 @@ const BudgetIncomePage = () => {
           <h2>
             <span className="accent">Prihodi</span> 
           </h2>
-          <Table transactions={incomes} showBudget={false} />
+          <div className="grid-xs">
+            <label htmlFor="filterCategory">Filtriraj po kategoriji:</label>
+            <select
+              name="filterCategory"
+              id="filterCategory"
+              value={filteredCategory}
+              onChange={handleFilterChange}
+            >
+              <option value="">Sve kategorije</option>
+              {incomeCategories.map((category) => (
+                <option key={category.id} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <Table transactions={filteredIncomes} showBudget={false} />
+          {noIncomesMessage}
         </div>
       )}
     </div>
