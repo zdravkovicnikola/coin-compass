@@ -2,5 +2,11 @@
     { "id": 1, "name": "Hrana" },
     { "id": 2, "name": "Stanovanje" },
     { "id": 3, "name": "Transport" },
-    { "id": 4, "name": "Odeća" }
+    { "id": 4, "name": "Odeća" },
+    { "id": 5, "name": "Komunalije" },
+    { "id": 6, "name": "Zdravlje" },
+    { "id": 7, "name": "Sport" },
+    { "id": 8, "name": "Pokloni" },
+    { "id": 9, "name": "Provodi" },
+    { "id": 10, "name": "Hobiji" }
 ]

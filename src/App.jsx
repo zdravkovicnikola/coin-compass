@@ -26,6 +26,7 @@ import BudgetIncomePage, {
   budgetIncomeAction,
   budgetIncomeLoader, 
 } from "./pages/BudgetIncomePage";
+import ChallengesPage from "./pages/ChallengesPage";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,11 @@ const router = createBrowserRouter([
         element: <TransactionsPage />,
         loader: transactionsLoader,
         action: transactionsAction,
+        errorElement: <Error />
+      },
+      {
+        path: "challenges",
+        element: <ChallengesPage />,
         errorElement: <Error />
       }
     ]

@@ -41,6 +41,7 @@ export function dashboardLoader() {
   };
 }
 
+
 //action
 export async function dashboardAction({ request }) {
   await waait();
@@ -149,6 +150,12 @@ const Dashboard = () => {
                   {budgets.length > 0 && (
                     <BudgetItem key={budgets[0].id} budget={budgets[0]} />
                   )}
+                  <Link to= "challenges">
+                    <button className="button-49">
+                      <span className="accent">Dodaj izazov</span>
+                    </button>
+                  </Link>
+                  <p>Status: Pocetnik</p>
                 </div>
                 <div className="flex-lg">
                   <AddExpenseForm budgets={budgets} />
@@ -160,7 +167,7 @@ const Dashboard = () => {
                     <Table
                       transactions={transactions
                         .sort((a, b) => b.createdAt - a.createdAt)
-                        .slice(0,3)}
+                        .slice(0, 3)}
                     />
                     {transactions.length > 3 && (
                       <Link to="transactions" className="btn btn--dark">
