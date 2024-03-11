@@ -77,6 +77,25 @@ export const createIncome = ({
     JSON.stringify([...existingIncomes, newItem]))
 }
 
+// napravi izazov
+export const createChallenge = ({
+  name, amount, categoryId , quest , date, budgetId
+}) => {
+  const newItem = {
+    id: crypto.randomUUID(),
+    name: name,
+    date: date,
+    budgetId: budgetId,
+    amount: +amount,
+    categoryId: categoryId,
+    quest: quest,
+    done: "neizvrsen"
+  }
+  const existingChallenges = fetchData("challenges") ?? [];
+  return localStorage.setItem("challenges",
+    JSON.stringify([...existingChallenges, newItem]))
+}
+
 // total potroseno 
 export const calculateSpentByBudget = (budgetId) => {
   const expenses = fetchData("expenses") ?? [];

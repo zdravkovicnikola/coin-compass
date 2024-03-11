@@ -25,6 +25,9 @@ export async function logoutAction() {
   deleteItem({
     key: "incomes"
   });
+  deleteItem({
+    key: "challenges"
+  });
   toast.success("Uspešno izbrisan nalog!");
   // return redirect
   return redirect("/")
