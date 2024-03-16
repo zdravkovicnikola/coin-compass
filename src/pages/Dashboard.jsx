@@ -19,8 +19,10 @@ import {
   createIncome,
   deleteItem,
   fetchData,
-  waait,
+  updateChallenges,
+  waait
 } from "../helpers";
+import { useEffect } from "react";
 
 // loader
 export function dashboardLoader() {
@@ -30,7 +32,9 @@ export function dashboardLoader() {
   const budgets = fetchData("budgets");
   const expenses = fetchData("expenses");
   const incomes = fetchData("incomes");
-
+  const challenges = fetchData ("challenges");
+  const done = fetchData ("done");
+  
   return {
     budgets,
     expenses,
@@ -38,6 +42,8 @@ export function dashboardLoader() {
     email,
     password,
     incomes,
+    challenges,
+    done
   };
 }
 
@@ -75,6 +81,13 @@ export async function dashboardAction({ request }) {
         categoryId: values.newExpenseCategory,
         budgetId: values.newExpenseBudget,
       });
+      const newExpense = {
+        name: values.newExpense,
+        amount: values.newExpenseAmount,
+        categoryId: values.newExpenseCategory,
+        budgetId: values.newExpenseBudget,
+      };
+      updateChallenges({expense: newExpense, action:"create"})
       return toast.success(
         `Skinuli ste ${values.newExpenseAmount} $ sa računa pri uzimanju ${values.newExpense}!`
       );
@@ -84,15 +97,27 @@ export async function dashboardAction({ request }) {
   }
   if (_action === "deleteExpense") {
     try {
-      deleteItem({
-        key: "expenses",
-        id: values.expenseId,
-      });
-      return toast.success("Trošak izbrisan");
+      let expenses = fetchData("expenses");
+        const deletedExpense = expenses.find(expense => 
+            expense.id === values.expenseId);
+
+        if (!deletedExpense) {
+            throw new Error("Trošak nije pronađen.");
+        }
+
+        deleteItem({
+            key: "expenses",
+            id: values.expenseId,
+        });
+
+        updateChallenges({ expense: deletedExpense, action: "delete" }); 
+
+        return toast.success("Trošak izbrisan");
     } catch (e) {
-      throw new Error("Pojavio se problem pri brisanju troška.");
+      console.log(e)
+        throw new Error("Pojavio se problem pri brisanju troška.");
     }
-  }
+}
   if (_action === "deleteIncome") {
     try {
       deleteItem({
@@ -119,10 +144,11 @@ export async function dashboardAction({ request }) {
       throw new Error("Došlo je do problema prilikom kreiranja vašeg prihoda.");
     }
   }
+
 }
 
 const Dashboard = () => {
-  const { email, budgets, expenses, incomes } = useLoaderData();
+  const { email, budgets, expenses, incomes, challenges, done } = useLoaderData();
 
   let transactions = [];
 
@@ -135,8 +161,11 @@ const Dashboard = () => {
       incomes.map((income) => ({ ...income, type: "income" }))
     );
   }
-  console.log(transactions);
-  return (
+
+  useEffect(()=>{
+    console.log(challenges)
+  })
+    return (
     <>
       {email ? (
         <div className="dashboard">
@@ -155,7 +184,7 @@ const Dashboard = () => {
                       <span className="accent">Dodaj izazov</span>
                     </button>
                   </Link>
-                  <p>Status: Pocetnik</p>
+                  <p>Status: {done} / {challenges.length} </p>
                 </div>
                 <div className="flex-lg">
                   <AddExpenseForm budgets={budgets} />

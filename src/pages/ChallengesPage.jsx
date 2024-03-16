@@ -9,16 +9,24 @@ import { useFetcher, useLoaderData } from "react-router-dom";
 import expenseCategories from "../components/expenseCategories.json";
 import challengeList from "../pages/challengeList.json";
 
-import { createChallenge, fetchData, waait , deleteItem,} from "../helpers";
+import {
+  createChallenge,
+  fetchData,
+  waait,
+  deleteItem,
+  updateChallenges,
+} from "../helpers";
 import TableChallenges from "../components/TableChallenges";
 
 export function challengeLoader() {
   const challenges = fetchData("challenges");
   const budgets = fetchData("budgets");
+  const expenses = fetchData("expenses");
 
   return {
     budgets,
     challenges,
+    expenses,
   };
 }
 export async function challengeAction({ request }) {
@@ -34,7 +42,7 @@ export async function challengeAction({ request }) {
         categoryId: values.newExpenseCategory,
         amount: values.newChallengeAmount,
         date: values.newChallengeDate,
-        budgetId: values.newExpenseBudget
+        budgetId: values.newExpenseBudget,
       });
       return toast.success(
         `Uspešno ste kreirali izazov ${values.newChallenge} , srećno!`
@@ -42,20 +50,20 @@ export async function challengeAction({ request }) {
     } catch (e) {
       throw new Error("Došlo je do problema prilikom kreiranja izazova.");
     }
-    if (_action === "deleteChallenge") {
-      try {
-        deleteItem({
-          key: "challenges",
-          id: values.challengeId,
-        });
-        return toast.success("Izazov uspešno izbrisan");
-      } catch (e) {
-        throw new Error("Pojavio se problem pri brisanju izazova.");
-      }
+  if (_action === "deleteChallenge") {
+    try {
+      deleteItem({
+        key: "challenges",
+        id: values.challengeId,
+      });
+      return toast.success("Izazov uspešno izbrisan");
+    } catch (e) {
+      throw new Error("Pojavio se problem pri brisanju izazova.");
     }
+  }
 }
 const ChallengesPage = () => {
-  const { challenges, budgets } = useLoaderData();
+  const { challenges, budgets, expenses } = useLoaderData();
 
   const currentDate = new Date();
 
@@ -82,6 +90,12 @@ const ChallengesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedChallenge, setSelectedChallenge] = useState("");
 
+  let transactions = [];
+
+  if (expenses && expenses.length > 0) {
+    transactions = expenses.map((expense) => ({ ...expense, type: "expense" }));
+  }
+
   useEffect(() => {
     // Ovde možete dodatno obraditi učitane kategorije ako je potrebno
   }, []);
@@ -93,10 +107,49 @@ const ChallengesPage = () => {
   const handleChallengeChange = (e) => {
     setSelectedChallenge(e.target.value);
   };
-  
+
   var status = "neizvrsen";
+
+  useEffect(() => {
+    challenges.forEach((challenge) => {
+      if (challenge.quest === "Ograničeni horizont") {
+        const challengeDate = new Date(challenge.date);
+        const currentDate = new Date();
+
+        if (challenge.amount === 0) {
+          return toast.success(
+            `Izazov "${challenge.name}" uspešno izvršen čestitamo!`
+          );
+        }
+
+        if (challengeDate < currentDate) {
+          return toast.error(`Izazov "${challenge.name}" je istekao!`);
+        }
+      } else if (challenge.quest === "Troškovna trka") {
+        const challengeDate = new Date(challenge.date);
+        const currentDate = new Date();
+
+        if (challenge.amount === 0) {
+   return toast.success(
+            `Izazov "${challenge.name}" uspešno izvršen čestitamo!`
+          );
+        }
+
+        if (challengeDate < currentDate) {
+   return toast.error(`Izazov "${challenge.name}" je istekao!`);
+        }
+      } else if (challenge.quest === "Finansijski fitnes") {
+        if (challenge.amount === 0) {
+   return toast.success(
+            `Izazov "${challenge.name}" uspešno izvršen čestitamo!`
+          );
+        }
+      }
+    });
+  }, [challenges]);
+
   return (
-    <>    
+    <>
       <div className="form-wrapper">
         <h2 className="h3">Kreiraj novi izazov</h2>
         <fetcher.Form method="post" className="flex-lg" ref={formRef}>

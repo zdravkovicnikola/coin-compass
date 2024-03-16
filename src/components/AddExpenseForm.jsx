@@ -6,7 +6,7 @@ import { useFetcher } from "react-router-dom";
 
 import expenseCategories from "../components/expenseCategories.json";
 
-const AddExpenseForm = ({ budgets }) => {
+const AddExpenseForm = ({ budgets}) => {
   const fetcher = useFetcher();
   const isSubmitting = fetcher.state === "submitting";
 
@@ -179,7 +179,7 @@ const AddExpenseForm = ({ budgets }) => {
           )}
         </div>
         <input type="hidden" name="_action" value="createExpense" />
-        <button type="submit" className="btn btn--dark" disabled={isSubmitting}>
+        <button type="submit" className="btn btn--dark" disabled={isSubmitting} >
           {isSubmitting ? (
             <span>Submitting…</span>
           ) : (

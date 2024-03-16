@@ -27,8 +27,9 @@ const ChallengeItem = ({ challenge }) => {
       <td>{challenge.quest}</td>
       <td>{challenge.categoryId}</td>
       <td>{formatCurrency(challenge.amount)}</td>
+      <td>{formatDateToLocaleString(challenge.createdAt)}</td>
       <td>{formatDateToLocaleString(challenge.date)}</td>
-      <td>{challenge.done}</td>
+      <td>{challenge.status}</td>
       <td>
         <fetcher.Form method="post">
           <input type="hidden" name="_action" value="deleteChallenge" />

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ChallengeItem from './ChallengeItem'
 
 const TableChallenges = ({ challenges }) => {
@@ -8,7 +8,7 @@ const TableChallenges = ({ challenges }) => {
             <thead>
               <tr>
                 {
-                  ["Naziv", "Tip izazova", "Kategorija troška", "Zadati iznos","Datum", "Status"].map(
+                  ["Naziv", "Tip izazova", "Kategorija troška", "Zadati iznos","Kreiran", "Važi do", "Status"].map(
                     (i, index) => (
                     <th key={index}>{i}</th>
                   )

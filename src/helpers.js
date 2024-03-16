@@ -84,17 +84,47 @@ export const createChallenge = ({
   const newItem = {
     id: crypto.randomUUID(),
     name: name,
+    createdAt: Date.now(),
     date: date,
     budgetId: budgetId,
     amount: +amount,
     categoryId: categoryId,
     quest: quest,
-    done: "neizvrsen"
+    status: "Neizvršen"
   }
   const existingChallenges = fetchData("challenges") ?? [];
   return localStorage.setItem("challenges",
     JSON.stringify([...existingChallenges, newItem]))
 }
+
+//update Challenges
+export const updateChallenges = ({ expense, action }) => {
+  const existingChallenges = fetchData("challenges") ?? [];
+  let updatedChallenges = [...existingChallenges];
+  let doneCount = parseInt(localStorage.getItem("done")) || 0;
+
+  updatedChallenges = updatedChallenges.map(challenge => {
+    if (action === "create" && (challenge.createdAt < expense.createdAt) && (challenge.categoryId === expense.categoryId || challenge.categoryId === "Bilo koji trosak")) {
+      challenge.amount -= expense.amount;
+      if (challenge.amount <= 0 && challenge.status !== "Izvršen") {
+        doneCount++;
+        challenge.status = "Izvršen";
+      }
+    } else if (action === "delete" && (challenge.createdAt < expense.createdAt) && (challenge.categoryId === expense.categoryId || challenge.categoryId === "Bilo koji trosak")) {
+      challenge.amount += expense.amount;
+      if (challenge.amount > 0 && challenge.status === "Izvršen") {
+        doneCount--;
+        challenge.status = "Neizvršen";
+      }
+    }
+    return challenge;
+  });
+
+  // Čuvanje ažuriranih izazova i broja završenih izazova u lokalnom skladištu
+  localStorage.setItem("challenges", JSON.stringify(updatedChallenges));
+  localStorage.setItem("done", doneCount.toString());
+}
+
 
 // total potroseno 
 export const calculateSpentByBudget = (budgetId) => {
