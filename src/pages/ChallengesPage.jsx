@@ -91,7 +91,7 @@ const ChallengesPage = () => {
   const [selectedChallenge, setSelectedChallenge] = useState("");
 
   let transactions = [];
-
+  
   if (expenses && expenses.length > 0) {
     transactions = expenses.map((expense) => ({ ...expense, type: "expense" }));
   }

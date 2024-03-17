@@ -150,37 +150,46 @@ export async function dashboardAction({ request }) {
 var completedChallenges = [];
 const Dashboard = () => {
   const { email, budgets, expenses, incomes, challenges, done } =
-  useLoaderData();
-  
+    useLoaderData();
+
   let transactions = [];
-  
+
   if (expenses && expenses.length > 0) {
     transactions = expenses.map((expense) => ({ ...expense, type: "expense" }));
   }
-  
+
   if (incomes && incomes.length > 0) {
     transactions = transactions.concat(
       incomes.map((income) => ({ ...income, type: "income" }))
     );
   }
-  
+
   useEffect(() => {
-    challenges.forEach(challenge => {
-      if (challenge.status === "Izvršen" && !completedChallenges.includes(challenge.id)) {
+    if (!done || !challenges) {
+      return; // Ako su done ili challenges null, prekidamo izvršenje useEffect-a
+    }
+    challenges.forEach((challenge) => {
+      if (
+        challenge.status === "Izvršen" &&
+        !completedChallenges.includes(challenge.id)
+      ) {
         toast.success(`Izazov "${challenge.name}" je uspešno izvršen!`);
-         completedChallenges.push(challenge.id);
-      } else if ((challenge.quest === "Ograničeni horizont" || challenge.quest === "Troškovna trka") && !completedChallenges.includes(challenge.id)) {
+        completedChallenges.push(challenge.id);
+      } else if (
+        (challenge.quest === "Ograničeni horizont" ||
+          challenge.quest === "Troškovna trka") &&
+        !completedChallenges.includes(challenge.id)
+      ) {
         const challengeDate = new Date(challenge.date);
         const currentDate = new Date();
-  
+
         if (challengeDate < currentDate) {
           toast.error(`Izazov "${challenge.name}" je istekao!`);
-           completedChallenges.push(challenge.id);
+          completedChallenges.push(challenge.id);
         }
       }
     });
   }, [challenges]);
-  
   return (
     <>
       {email ? (
@@ -201,7 +210,8 @@ const Dashboard = () => {
                     </button>
                   </Link>
                   <p>
-                    Status: {done} / {challenges.length}{" "}
+                    Status: {done || 0} /{" "}
+                    {(challenges && challenges.length) || 0}
                   </p>
                 </div>
                 <div className="flex-lg">
