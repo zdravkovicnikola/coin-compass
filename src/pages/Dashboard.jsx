@@ -20,9 +20,9 @@ import {
   deleteItem,
   fetchData,
   updateChallenges,
-  waait
+  waait,
 } from "../helpers";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // loader
 export function dashboardLoader() {
@@ -32,9 +32,9 @@ export function dashboardLoader() {
   const budgets = fetchData("budgets");
   const expenses = fetchData("expenses");
   const incomes = fetchData("incomes");
-  const challenges = fetchData ("challenges");
-  const done = fetchData ("done");
-  
+  const challenges = fetchData("challenges");
+  const done = fetchData("done");
+
   return {
     budgets,
     expenses,
@@ -43,10 +43,9 @@ export function dashboardLoader() {
     password,
     incomes,
     challenges,
-    done
+    done,
   };
 }
-
 
 //action
 export async function dashboardAction({ request }) {
@@ -86,8 +85,9 @@ export async function dashboardAction({ request }) {
         amount: values.newExpenseAmount,
         categoryId: values.newExpenseCategory,
         budgetId: values.newExpenseBudget,
+        createdAt: Date.now(),
       };
-      updateChallenges({expense: newExpense, action:"create"})
+      updateChallenges({ expense: newExpense, action: "create" });
       return toast.success(
         `Skinuli ste ${values.newExpenseAmount} $ sa računa pri uzimanju ${values.newExpense}!`
       );
@@ -98,26 +98,27 @@ export async function dashboardAction({ request }) {
   if (_action === "deleteExpense") {
     try {
       let expenses = fetchData("expenses");
-        const deletedExpense = expenses.find(expense => 
-            expense.id === values.expenseId);
+      const deletedExpense = expenses.find(
+        (expense) => expense.id === values.expenseId
+      );
 
-        if (!deletedExpense) {
-            throw new Error("Trošak nije pronađen.");
-        }
+      if (!deletedExpense) {
+        throw new Error("Trošak nije pronađen.");
+      }
 
-        deleteItem({
-            key: "expenses",
-            id: values.expenseId,
-        });
+      deleteItem({
+        key: "expenses",
+        id: values.expenseId,
+      });
 
-        updateChallenges({ expense: deletedExpense, action: "delete" }); 
+      updateChallenges({ expense: deletedExpense, action: "delete" });
 
-        return toast.success("Trošak izbrisan");
+      return toast.success("Trošak izbrisan");
     } catch (e) {
-      console.log(e)
-        throw new Error("Pojavio se problem pri brisanju troška.");
+      console.log(e);
+      throw new Error("Pojavio se problem pri brisanju troška.");
     }
-}
+  }
   if (_action === "deleteIncome") {
     try {
       deleteItem({
@@ -144,28 +145,43 @@ export async function dashboardAction({ request }) {
       throw new Error("Došlo je do problema prilikom kreiranja vašeg prihoda.");
     }
   }
-
 }
 
+var completedChallenges = [];
 const Dashboard = () => {
-  const { email, budgets, expenses, incomes, challenges, done } = useLoaderData();
-
+  const { email, budgets, expenses, incomes, challenges, done } =
+  useLoaderData();
+  
   let transactions = [];
-
+  
   if (expenses && expenses.length > 0) {
     transactions = expenses.map((expense) => ({ ...expense, type: "expense" }));
   }
-
+  
   if (incomes && incomes.length > 0) {
     transactions = transactions.concat(
       incomes.map((income) => ({ ...income, type: "income" }))
     );
   }
-
-  useEffect(()=>{
-    console.log(challenges)
-  })
-    return (
+  
+  useEffect(() => {
+    challenges.forEach(challenge => {
+      if (challenge.status === "Izvršen" && !completedChallenges.includes(challenge.id)) {
+        toast.success(`Izazov "${challenge.name}" je uspešno izvršen!`);
+         completedChallenges.push(challenge.id);
+      } else if ((challenge.quest === "Ograničeni horizont" || challenge.quest === "Troškovna trka") && !completedChallenges.includes(challenge.id)) {
+        const challengeDate = new Date(challenge.date);
+        const currentDate = new Date();
+  
+        if (challengeDate < currentDate) {
+          toast.error(`Izazov "${challenge.name}" je istekao!`);
+           completedChallenges.push(challenge.id);
+        }
+      }
+    });
+  }, [challenges]);
+  
+  return (
     <>
       {email ? (
         <div className="dashboard">
@@ -179,12 +195,14 @@ const Dashboard = () => {
                   {budgets.length > 0 && (
                     <BudgetItem key={budgets[0].id} budget={budgets[0]} />
                   )}
-                  <Link to= "challenges">
+                  <Link to="challenges">
                     <button className="button-49">
                       <span className="accent">Dodaj izazov</span>
                     </button>
                   </Link>
-                  <p>Status: {done} / {challenges.length} </p>
+                  <p>
+                    Status: {done} / {challenges.length}{" "}
+                  </p>
                 </div>
                 <div className="flex-lg">
                   <AddExpenseForm budgets={budgets} />

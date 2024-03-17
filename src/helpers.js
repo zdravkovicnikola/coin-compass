@@ -104,7 +104,7 @@ export const updateChallenges = ({ expense, action }) => {
   let doneCount = parseInt(localStorage.getItem("done")) || 0;
 
   updatedChallenges = updatedChallenges.map(challenge => {
-    if (action === "create" && (challenge.createdAt < expense.createdAt) && (challenge.categoryId === expense.categoryId || challenge.categoryId === "Bilo koji trosak")) {
+     if (action === "create" && (challenge.createdAt < expense.createdAt) && (challenge.categoryId === expense.categoryId || challenge.categoryId === "Bilo koji trosak")) {
       challenge.amount -= expense.amount;
       if (challenge.amount <= 0 && challenge.status !== "Izvršen") {
         doneCount++;
