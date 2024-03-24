@@ -111,6 +111,7 @@ const ChallengesPage = () => {
   var status = "neizvrsen";
 
   useEffect(() => {
+    if (challenges && challenges.length > 0) {
     challenges.forEach((challenge) => {
       if (challenge.quest === "Ograničeni horizont") {
         const challengeDate = new Date(challenge.date);
@@ -146,7 +147,8 @@ const ChallengesPage = () => {
         }
       }
     });
-  }, [challenges]);
+  }
+}, [challenges]);
 
   return (
     <>
